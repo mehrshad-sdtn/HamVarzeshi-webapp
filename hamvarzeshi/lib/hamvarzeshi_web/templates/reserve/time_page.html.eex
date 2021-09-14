@@ -1,0 +1,18 @@
+<div class= "flex justify-center items-center" >
+  <div class="border my-10 h-72 w-6/12 rounded-md shadow-lg justify-center">
+     <p class="h-8 justify-center flex mt-8 font-thin"> determine your reservation times: </p>
+     <hr>
+     <div class="my-4 justify-center flex">
+      <%= form_for @conn, Routes.reserve_path(@conn, :reserve, @id), fn f -> %>
+
+         <span class="font-thin">start:</span> <br> <%= text_input f, :for, name: "start", type: "time", class: "w-32 my-1 border shadow-inner rounded-md" %>
+          <br>
+          <span class="font-thin">end:</span> <br> <%= text_input f, :for, name: "end", type: "time", class: "w-32 my-1 border shadow-inner rounded-md" %>
+          <br>
+          <div class="bg-blue-400 text-white rounded-full flex justify-center w-24 h-8 ml-4 my-4 shadow-md">
+            <%= submit "Submit" %>
+          </div>
+      <% end %>
+     </div>
+  </div>
+</div>

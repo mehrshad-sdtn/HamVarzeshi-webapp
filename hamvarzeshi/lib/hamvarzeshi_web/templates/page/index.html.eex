@@ -1,0 +1,73 @@
+<ul class= "collection">
+  <%= for gym <- @gyms do  %>
+    <li class= "collection-item">
+
+      <div class= "bg-white border shadow-md rounded-lg h-36 w-10/12 my-4 ml-8 md:ml-24 lg:36 flex">
+       <div class= "float-left w-8/12">
+         <%= if gym.photo do %>
+          <img src="<%= Routes.static_path(@conn, "/#{gym.photo}") %>" class= "mr-8 float-left h-28 w-28 m-4 shadow-md rounded-full border inner-shadow">
+          <% else %>
+          <img src="<%= Routes.static_path(@conn, "/uploads/default.png") %>" class= "mr-8 float-left h-28 w-28 m-4 shadow-md rounded-full border inner-shadow">
+         <% end %>
+          <div class= "py-6">
+            <h3 class= "font-semibold text-xl hover:text-blue-500"> <%= link gym.name, to: Routes.gym_path(@conn, :show, gym.id) %> </h3>
+            <p class= "text-sm"> <%= gym.description %> </p>
+            <p class= "text-md mt-1 sm:mt-4 text-blue-400 font-semibold"> <%= gym.price %>$ </p>
+          </div>
+        </div>
+
+        <div class= "float-right w-4/12">
+
+
+          <%= if @conn.assigns[:user] do %>
+            <%=  if @conn.assigns.user.id == gym.user_id do %>
+
+                <button class=
+                "float-right mr-4 mt-4 hover:text-white hover:bg-red-500 w-20
+                rounded-full shadow-sm border border-red-500 text-red-500 bg-white">
+                   <%= link "Delete", to: Routes.gym_path(@conn, :delete, gym), method: :delete%>
+                </button>
+
+
+                <button class=
+                "float-right mr-4 mt-4 hover:text-white hover:bg-blue-400 hover:border-blue-400 w-20
+                rounded-full shadow-sm border border-blue-500 text-blue-500 bg-white">
+                    <%= link "Edit", to: Routes.gym_path(@conn, :edit, gym) %>
+                </button>
+
+            <% else %>
+                <button class=
+                 "float-right mr-4 mt-4 hover:text-white hover:bg-blue-400 hover:border-blue-400 w-20
+                 rounded-full shadow-sm border border-blue-500 text-blue-500 bg-white">
+
+                     <%= link "Reserve", to: Routes.reserve_path(@conn, :reserve_times, gym.id) %>
+
+                </button>
+
+
+                <p class="float-right mr-4 mt-4 w-20
+                 rounded-full shadow-sm border border-yellow-400 text-yellow-400 bg-white flex justify-center">
+                 <%= if gym.rating do %>
+                  <%= div(gym.rating, gym.count_rated) %>/5
+                 <% else %>
+                   unrated
+                 <% end %>
+
+                <p>
+            <% end %>
+
+
+
+          <% end %>
+
+
+
+        </div>
+
+      </div>
+
+
+    </li>
+
+  <% end %>
+</ul>

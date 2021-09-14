@@ -1,0 +1,62 @@
+<div class= "h-screen w-full justify-center">
+  <div class= "bg-white-400 border shadow-lg h-40 w-10/12 mt-4 rounded-md px-8 pt-4 ml-12 md:ml-26 lg:ml-32">
+    <div class= "font-medium text-lg mb-2">
+      <%= @conn.assigns.user.name %>
+    </div>
+    <hr class= "shadow-lg">
+
+    <p class= "font-thin text-md mt-4">
+      <span class="text-blue-400 font-medium">email:  </span><%= @conn.assigns.user.email %>
+    </p>
+
+    <p class= "font-thin text-md">
+      <span class="text-blue-400 font-medium">date of registeration:  </span><%= @conn.assigns.user.inserted_at %>
+    </p>
+  </div>
+
+  <div class= "bg-white border shadow-lg w-10/12 mt-4 rounded-lg  px-8 pt-2 ml-12 md:ml-26 lg:ml-32">
+    <p class= "font-semibold text-lg mb-4"> Reserved Gyms </p>
+    <hr>
+    <%= if @gyms do %>
+      <%= for gym <- @gyms do  %>
+
+       <div class= "h-32 border my-6 rounded-md shadow-md text-blue-600 bg-blue-100 p-6 font-medium">
+         <%= gym.name %>
+         <div class= "float-right flex">
+         <button class= "border border-red-500 h-8 w-20
+           hover:bg-red-500 hover:text-blue-100 mt-1 rounded-full text-red-500 py-0 shadow-sm mx-2">
+           <%= link "Cancel", to: Routes.reserve_path(@conn, :cancel, gym.id) %>
+         </button>
+
+          <%= button("Rate", to: Routes.rate_path(@conn, :get_form, gym.id, gym.name), method: :get, class: "border border-black h-8 w-20
+           hover:bg-black hover:text-blue-100 mt-1 rounded-full text-black py-0 shadow-sm mx-1") %>
+
+
+
+         </div>
+
+         <div class= "font-thin">
+         price: <%= gym.price %>$
+         </div>
+
+         <div class= "font-thin">
+           <%= button("View reservation details", to: Routes.user_path(@conn, :show_detail, @conn.assigns.user.id, gym.id), method: :get, class: "mt-4 font-thin") %>
+         </div>
+
+
+       </div>
+
+      <% end %>
+    <% end %>
+
+     <hr>
+     <div class= my-8>
+
+       <p> Total: <span class="font-bold"><%= @total_price %>$</span> </p>
+
+       <button class= "bg-blue-500 text-white rounded-full border shadow-md w-24 h-8 my-4"> checkout </button>
+     </div>
+
+  </div>
+
+<div>

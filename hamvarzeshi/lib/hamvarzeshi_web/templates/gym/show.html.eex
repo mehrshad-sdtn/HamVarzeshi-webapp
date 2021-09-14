@@ -1,0 +1,45 @@
+<div class= "w-full sm:w-full h-full justify-center">
+  <div class= "flex justify-center">
+    <div class= "bg-white  w-9/12 h-44 mt-4 border border-gray-200 shadow-lg rounded-md">
+      <%= if @gym.photo do %>
+        <img src="<%= Routes.static_path(@conn, "/#{@gym.photo}") %>" class= "mr-8 float-left h-32 w-32 m-4 shadow-md rounded-full border border-gray-300 inner-shadow">
+      <% else %>
+        <img src="<%= Routes.static_path(@conn, "/uploads/default.png") %>" class= "mr-8 float-left h-32 w-32 m-4 shadow-md rounded-full border border-gray-300 inner-shadow">
+      <% end %>
+
+      <div class= "mt-6 pl-52">
+        <div class= "font-semibold text-xl"><%= @gym.name %></div>
+        <div class= "font-light text-lg"><%= @gym.description %></div>
+        <div class= "font-medium text-blue-400 text-lg"><%= @gym.price %>$</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class= "justify-center flex">
+    <div class= "bg-blue-100 w-9/12  mt-4 border border-gray-200 shadow-md rounded-md px-4 ">
+      <div class= "px-8 text-lg font-thin border-gray-300 border-b py-4"> comments
+        <br>
+        <input id="text-area" class="bg-gray-100 shadow-inner border border-blue-400 w-full font-thin mt-4 rounded-md h-16 text-sm" type="text" placeholder= "write your comments here">
+        <br>
+        <button id="post-btn" class="border rounded-full w-20 h-8 bg-blue-400 text-sm font-extralight text-white mt-4"> Post <button>
+
+      </div>
+
+      <div class= "text-md font-extralight">
+        <ul id= "collection" class= mt-4>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    window.createSocket(<%= @gym.id %>)
+  });
+
+  </script>
+
+ </div>
